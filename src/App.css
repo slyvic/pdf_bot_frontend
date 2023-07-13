@@ -1,0 +1,113 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.app-container {
+  margin: 20px;
+}
+
+.active-tab {
+  border: 1px solid #E5E7EB !important;
+}
+
+.tab-buttons {
+  text-transform: none !important;
+}
+
+.tab-container {
+  border: 1px solid #E5E7EB;
+}
+
+/* ! start input pdf document tab style */
+
+.file-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 1vw;
+  border: solid .1vw #E5E7EB;
+}
+
+.drop-file-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  border: .1vw dashed #E5E7EB;
+}
+
+.text-box-container {
+  padding: 1vw;
+  margin-top: 2vh;
+  border: solid #E5E7EB .1vw;
+}
+
+.text-box-value {
+  margin-top: 1vh;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 1vw;
+  border: solid .1vw #E5E7EB;
+}
+
+.build-button {
+  width: 100%;
+  padding: 10px 0 !important;
+  margin-top: 2vh !important;
+  font-weight: bold !important;
+  color: #374151 !important;
+  background-color: #e5e7eb !important;
+}
+
+.build-button:hover {
+  background-color: #F3F4F6 !important;
+}
+
+/* ! end input pdf document tab style */
+
+.chat-message {
+  width: 100%;
+  outline: none;
+}
+
+.bot-content {
+  padding: 1vw;
+  border: solid #E5E7EB .1vw;
+}
