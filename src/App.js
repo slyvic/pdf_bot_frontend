@@ -4,9 +4,9 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import './App.css';
 import FileInputTab from './component/FileInputTab';
 import BotTab from './component/BotTab';
+import './App.css';
 
 function App() {
 	const [value, setValue] = React.useState('input-file');
