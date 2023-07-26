@@ -44,6 +44,8 @@
 
 .active-tab {
   border: 1px solid #E5E7EB !important;
+  border: 1px solid #E5E7EB !important;
+  border-radius: 10px 10px 0 0 !important;
 }
 
 .tab-buttons {
@@ -61,6 +63,7 @@
   justify-content: space-between;
   padding: 1vw;
   border: solid .1vw #E5E7EB;
+  border-radius: 10px;
 }
 
 .drop-file-content {
@@ -70,12 +73,14 @@
   justify-content: center;
   min-height: 40vh;
   border: .1vw dashed #E5E7EB;
+  border-radius: 8px;
 }
 
 .text-box-container {
   padding: 1vw;
   margin-top: 2vh;
   border: solid #E5E7EB .1vw;
+  border-radius: 10px;
 }
 
 .text-box-value {
@@ -85,6 +90,7 @@
   align-items: center;
   padding: 0 1vw;
   border: solid .1vw #E5E7EB;
+  border-radius: 10px;
 }
 
 .build-button {
@@ -110,4 +116,5 @@
 .bot-content {
   padding: 1vw;
   border: solid #E5E7EB .1vw;
+  border-radius: 10px;
 }

@@ -11,7 +11,9 @@ import './App.css';
 function App() {
 	const [value, setValue] = React.useState('input-file');
 	const [status, setStatus] = React.useState("");
+	const [file, setFile] = React.useState("");
 	const [chatHistory, setChatHistory] = React.useState([]);
+	const [loading, setLoading] = React.useState(false);
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
@@ -26,10 +28,10 @@ function App() {
 						</TabList>
 					</Box>
 					<TabPanel value="input-file" className='tab-container'>
-						<FileInputTab status={status} setStatus={setStatus} />
+						<FileInputTab setLoading={setLoading} loading={loading} status={status} setStatus={setStatus} setFile={setFile} file={file} />
 					</TabPanel>
 					<TabPanel value="bot" className='tab-container'>
-						<BotTab chatHistory={chatHistory} />
+						<BotTab chatHistory={chatHistory} setChatHistory={setChatHistory} />
 					</TabPanel>
 				</TabContext>
 			</Box>

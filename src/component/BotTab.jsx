@@ -3,16 +3,9 @@ import { Avatar, Typography, Box, Paper } from '@mui/material';
 
 const BotTab = (props) => {
     const [msg, setMsg] = React.useState("");
-    const [msgList, setMsgList] = React.useState([]);
-    const messages = [
-        { id: 1, sender: 'Jane', content: 'Hi Bot!' },
-        { id: 2, sender: 'Bot', content: 'Hello! How can I assist you today?' },
-        { id: 3, sender: 'Jane', content: 'How are you?' },
-        { id: 4, sender: 'Bot', content: "As an AI language model, I don’t have feelings or emotions, so I don’t have a personal state of being. However, I’m here to assist you with any questions or tasks you have. How can I help you today?" },
-    ];
 
     const submitMsg = async () => {
-        const temp = [...msgList];
+        const temp = [...props.chatHistory];
         temp.push({
             sender: "Me",
             content: msg
@@ -28,12 +21,12 @@ const BotTab = (props) => {
             .then(data => {
                 // Process the response data
                 console.log('Response:', data.msg);
-                if(data.msg != "") {
+                if(data.msg !== "") {
                     temp.push({
                         sender: "Bot",
                         content: data.msg
                     });
-                    setMsgList(temp);
+                    props.setChatHistory(temp);
                     console.log(temp)
                 } else {
                     console.log(data)
@@ -45,7 +38,7 @@ const BotTab = (props) => {
     };
     return <>
         <div className='bot-content'>
-            {msgList.map((message, idx) => (
+            {props.chatHistory.map((message, idx) => (
                 <Box
                     key={idx}
                     display="flex"
