@@ -59,7 +59,7 @@ const FileInputTab = (props) => {
 			props.file?.length > 0 ? <div className='file-content'>
 				<div>{props.file[0].name}</div>
 				<div>{(props.file[0].size / 1024).toFixed(1)}KB</div>
-				<button>Download</button>
+				<button onClick={() => {props.setLoading(false);props.setFile(null)}}>Delete</button>
 			</div> :
 				<FileUploader
 					multiple={true}
