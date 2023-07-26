@@ -5,7 +5,7 @@ import { fileTypes } from '../util/consts';
 import { pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const FileInputTab = () => {
+const FileInputTab = (props) => {
 	const [file, setFile] = React.useState(null);
 	const [text, setText] = React.useState("");
 	const handleFileDrop = (file) => {
@@ -15,7 +15,6 @@ const FileInputTab = () => {
 			const url = URL.createObjectURL(file[0])
 			const loadingTask = pdfjs.getDocument(url);
 			const pdf = await loadingTask.promise;
-			console.log(pdf.numPages)
 			let str = "";
 			for (let i = 1; i <= pdf.numPages; i++) {
 				pdf.getPage(i)
@@ -24,11 +23,29 @@ const FileInputTab = () => {
 						const pageText = textContent.items.map((item) => item.str).join('\n');
 						str += pageText;
 						setText(str);
-						console.log(str, "======================================================")
 					});
 			}
 		};
 		reader.readAsText(file[0]);
+	};
+	const uploadText = async () => {
+		await fetch("http://127.0.0.1:8000/bot/upload", {
+			method: 'post',
+			cache: 'no-cache',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({'text': text})
+		}).then(response => response.json())
+		  .then(data => {
+			// Process the response data
+			console.log('Response:', data);
+			props.setStatus(data.msg)
+		  })
+		  .catch(error => {
+			// Handle errors
+			console.error('Error:', error);
+		  });
 	};
 	return <>
 		{
@@ -60,11 +77,10 @@ const FileInputTab = () => {
 				Textbox
 			</div>
 			<div className='text-box-value'>
-				<div>Success! You can now click on the 'Knowledge bot' tab to interact with your document</div>
+				<div>{props.status}</div>
 			</div>
 		</div>
-		{text}
-		<Button className='build-button'>Build the bot!</Button>
+		<Button className='build-button' onClick={uploadText}>Build the bot!</Button>
 	</>
 }
 

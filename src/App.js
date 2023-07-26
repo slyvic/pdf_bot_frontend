@@ -10,6 +10,8 @@ import './App.css';
 
 function App() {
 	const [value, setValue] = React.useState('input-file');
+	const [status, setStatus] = React.useState("");
+	const [chatHistory, setChatHistory] = React.useState([]);
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
@@ -24,10 +26,10 @@ function App() {
 						</TabList>
 					</Box>
 					<TabPanel value="input-file" className='tab-container'>
-						<FileInputTab />
+						<FileInputTab status={status} setStatus={setStatus} />
 					</TabPanel>
 					<TabPanel value="bot" className='tab-container'>
-						<BotTab />
+						<BotTab chatHistory={chatHistory} />
 					</TabPanel>
 				</TabContext>
 			</Box>
