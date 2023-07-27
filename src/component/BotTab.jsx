@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { Avatar, Typography, Box, Paper } from '@mui/material';
+import LoadingSpin from './LoadingSpin';
 
 const BotTab = (props) => {
     const [msg, setMsg] = React.useState("");
 
     const submitMsg = async () => {
         const temp = [...props.chatHistory];
+        props.setLoading(true)
         temp.push({
             sender: "Me",
             content: msg
@@ -28,11 +30,14 @@ const BotTab = (props) => {
                     });
                     props.setChatHistory(temp);
                     console.log(temp)
+                    props.setLoading(false)
+                    setMsg("");
                 } else {
                     console.log(data)
                 }
             })
             .catch(error => {
+                props.setLoading(false)
                 console.error('Error:', error);
             });
     };
@@ -72,7 +77,7 @@ const BotTab = (props) => {
                 Ask here your question about the document, then press "enter" and scroll up for response
             </div>
             <div className='text-box-value'>
-                <input value={msg} onKeyDown={e => { if (e.key === "Enter") submitMsg() }} onChange={e => setMsg(e.target.value)} className='chat-message' />
+            {props.loading ? <LoadingSpin style={{display: 'flex', justifyContent: 'center', width: '100%'}} /> : <input value={msg} onKeyDown={e => { if (e.key === "Enter") submitMsg() }} onChange={e => setMsg(e.target.value)} className='chat-message' />}
             </div>
         </div>
     </>

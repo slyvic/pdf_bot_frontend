@@ -14,6 +14,7 @@ function App() {
 	const [file, setFile] = React.useState("");
 	const [chatHistory, setChatHistory] = React.useState([]);
 	const [loading, setLoading] = React.useState(false);
+	const [chatLoading, setChatLoading] = React.useState(false);
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
@@ -31,7 +32,7 @@ function App() {
 						<FileInputTab setLoading={setLoading} loading={loading} status={status} setStatus={setStatus} setFile={setFile} file={file} />
 					</TabPanel>
 					<TabPanel value="bot" className='tab-container'>
-						<BotTab chatHistory={chatHistory} setChatHistory={setChatHistory} />
+						<BotTab setLoading={setChatLoading} loading={chatLoading} chatHistory={chatHistory} setChatHistory={setChatHistory} />
 					</TabPanel>
 				</TabContext>
 			</Box>

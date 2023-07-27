@@ -51,6 +51,7 @@ const FileInputTab = (props) => {
 				props.setStatus(data.msg)
 			})
 			.catch(error => {
+				props.setLoading(false)
 				console.error('Error:', error);
 			});
 	};
