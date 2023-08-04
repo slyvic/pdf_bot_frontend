@@ -20,20 +20,28 @@ function App() {
 	};
 	return (
 		<div className='app-container'>
+			<header className='app-header'>
+				<img src='assets/img/logo.png' width='100' height='100' alt='logo' />
+				<div>
+					Satoya
+				</div>
+			</header>
 			<Box sx={{ width: '100%', typography: 'body1' }}>
 				<TabContext value={value}>
-					<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-						<TabList onChange={handleChange} aria-label="lab API tabs example">
-							<Tab label="Input PDF document here" value="input-file" className={value === 'input-file' ? 'tab-buttons active-tab' : 'tab-buttons'} />
-							<Tab label="Knowledge bot" value="bot" className={value === 'bot' ? 'tab-buttons active-tab' : 'tab-buttons'} />
-						</TabList>
-					</Box>
-					<TabPanel value="input-file" className='tab-container'>
-						<FileInputTab setLoading={setLoading} loading={loading} status={status} setStatus={setStatus} setFile={setFile} file={file} />
-					</TabPanel>
-					<TabPanel value="bot" className='tab-container'>
-						<BotTab setLoading={setChatLoading} loading={chatLoading} chatHistory={chatHistory} setChatHistory={setChatHistory} />
-					</TabPanel>
+					<div  style={{display: 'flex', width: '100%'}}>
+						<div className='side-tab-bar'>
+							<TabList onChange={handleChange} orientation="vertical" style={{display: 'flex'}} aria-label="lab API tabs example">
+								<Tab label="PDFドキュメントを入力" value="input-file" icon={<img className='tab-icons' src='assets/img/pdf.png' width='25' height="25" alt='pdf' />} className={value === 'input-file' ? 'tab-buttons active-tab' : 'tab-buttons'} />
+								<Tab label="ナレッジボット" value="bot" icon={<img className='tab-icons' src='assets/img/bot.png' width='25' height="25" alt='bot' />} className={value === 'bot' ? 'tab-buttons active-tab' : 'tab-buttons'} />
+							</TabList>
+						</div>
+						<TabPanel value="input-file" className='tab-container bot-build-container'>
+							<FileInputTab setLoading={setLoading} loading={loading} status={status} setStatus={setStatus} setFile={setFile} file={file} />
+						</TabPanel>
+						<TabPanel value="bot" className='tab-container'>
+							<BotTab setLoading={setChatLoading} loading={chatLoading} chatHistory={chatHistory} setChatHistory={setChatHistory} />
+						</TabPanel>
+					</div>
 				</TabContext>
 			</Box>
 		</div>

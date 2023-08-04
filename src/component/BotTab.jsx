@@ -18,7 +18,7 @@ const BotTab = (props) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ 'text': msg })
+            body: JSON.stringify({ 'text': msg + '. すべての言葉を日本語でお願いします。' })
         }).then(response => response.json())
             .then(data => {
                 // Process the response data
@@ -47,7 +47,7 @@ const BotTab = (props) => {
                 <Box
                     key={idx}
                     display="flex"
-                    alignItems="center"
+                    alignItems="start"
                     paddingTop={1}
                     justifyContent={message.sender === 'Bot' ? 'flex-start' : 'flex-end'}
                 >
@@ -74,7 +74,7 @@ const BotTab = (props) => {
         </div>
         <div className='text-box-container'>
             <div>
-                Ask here your question about the document, then press "enter" and scroll up for response
+                ここに文書について質問し、「入力」をタップして返信のために上にスクロールします。
             </div>
             <div className='text-box-value'>
             {props.loading ? <LoadingSpin style={{display: 'flex', justifyContent: 'center', width: '100%'}} /> : <input value={msg} onKeyDown={e => { if (e.key === "Enter") submitMsg() }} onChange={e => setMsg(e.target.value)} className='chat-message' />}

@@ -40,22 +40,41 @@
 
 .app-container {
   margin: 20px;
+  margin-top: 0;
 }
 
-.active-tab {
-  border: 1px solid #E5E7EB !important;
-  border: 1px solid #E5E7EB !important;
-  border-radius: 10px 10px 0 0 !important;
+.app-header {
+  display: flex;
+  align-items: center;
 }
 
 .tab-buttons {
+  display: flex;
+  justify-content: flex-start !important;
+  flex-direction: row !important;
   text-transform: none !important;
+  border-left: 1px solid #00000000 !important;
+}
+
+.active-tab {
+  border-left: 1px solid #E5E7EB !important;
+}
+
+.side-tab-bar {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+
+.tab-icons {
+  margin-right: 20px;
 }
 
 .tab-container {
+  width: 100%;
+  min-height: 80vh;
   border: 1px solid #E5E7EB;
 }
-
 /* ! start input pdf document tab style */
 
 .file-content {
@@ -93,17 +112,22 @@
   border-radius: 10px;
 }
 
+.build-button-container {
+  display: flex;
+  justify-content: center;
+}
+
 .build-button {
-  width: 100%;
+  width: 200px;
   padding: 10px 0 !important;
   margin-top: 2vh !important;
   font-weight: bold !important;
-  color: #374151 !important;
-  background-color: #e5e7eb !important;
+  color: #fff !important;
+  background-color: #FB4B4B  !important;
 }
 
 .build-button:hover {
-  background-color: #F3F4F6 !important;
+  background-color: #f71111 !important;
 }
 
 /* ! end input pdf document tab style */
@@ -115,6 +139,7 @@
 
 .bot-content {
   padding: 1vw;
+  height: 60vh;
   border: solid #E5E7EB .1vw;
   border-radius: 10px;
 }

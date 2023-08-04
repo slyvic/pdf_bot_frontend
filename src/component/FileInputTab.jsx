@@ -60,7 +60,7 @@ const FileInputTab = (props) => {
 			props.file?.length > 0 ? <div className='file-content'>
 				<div>{props.file[0].name}</div>
 				<div>{(props.file[0].size / 1024).toFixed(1)}KB</div>
-				<button onClick={() => {props.setLoading(false);props.setFile(null)}}>Delete</button>
+				<button onClick={() => { props.setLoading(false); props.setFile(null) }}>Delete</button>
 			</div> :
 				<FileUploader
 					multiple={true}
@@ -69,26 +69,28 @@ const FileInputTab = (props) => {
 					types={fileTypes}
 					children={<div className='drop-file-content'>
 						<div>
-							Drop File Here
+							ファイルをここに置きます。
 						</div>
 						<div>
-							- or -
+							-または-
 						</div>
 						<div>
-							Click to Upload
+							クリックしてアップロード
 						</div>
 					</div>}
 				/>
 		}
 		<div className='text-box-container'>
 			<div>
-				Textbox
+				テキストボックス
 			</div>
 			<div className='text-box-value'>
-			{props.loading ? <LoadingSpin style={{display: 'flex', justifyContent: 'center', width: '100%'}} /> : <div>{props.status}</div>}
+				{props.loading ? <LoadingSpin style={{ display: 'flex', justifyContent: 'center', width: '100%' }} /> : <div>{props.status}</div>}
 			</div>
 		</div>
-		<Button className='build-button' onClick={uploadText}>Build the bot!</Button>
+		<div className='build-button-container'>
+			<Button className='build-button' onClick={uploadText}>ボットを構築しましょう！</Button>
+		</div>
 	</>
 }
 
