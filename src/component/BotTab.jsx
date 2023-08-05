@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Avatar, Typography, Box, Paper } from '@mui/material';
 import LoadingSpin from './LoadingSpin';
+import { ToastContainer, toast } from "react-toastify";
 import { API_URL } from '../util/consts';
 
 const BotTab = (props) => {
@@ -46,6 +47,7 @@ const BotTab = (props) => {
             });
     };
     return <>
+        <ToastContainer />
         <div className='bot-content'>
             {props.chatHistory.map((message, idx) => (
                 <Box
