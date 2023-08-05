@@ -1,22 +1,25 @@
 import * as React from 'react';
 import { Avatar, Typography, Box, Paper } from '@mui/material';
 import LoadingSpin from './LoadingSpin';
+import { API_URL } from '../util/consts';
 
 const BotTab = (props) => {
     const [msg, setMsg] = React.useState("");
 
     const submitMsg = async () => {
         const temp = [...props.chatHistory];
+        const token = localStorage.getItem("token");
         props.setLoading(true)
         temp.push({
             sender: "Me",
             content: msg
         });
-        await fetch("http://127.0.0.1:8000/bot/chat", {
+        await fetch(API_URL+"chat", {
             method: 'post',
             cache: 'no-cache',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify({ 'text': msg + '. すべての言葉を日本語でお願いします。' })
         }).then(response => response.json())
@@ -38,6 +41,7 @@ const BotTab = (props) => {
             })
             .catch(error => {
                 props.setLoading(false)
+				toast.error("申し訳ありませんが、サーバーにエラーが発生したようです。");
                 console.error('Error:', error);
             });
     };

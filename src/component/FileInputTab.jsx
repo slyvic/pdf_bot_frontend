@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { FileUploader } from "react-drag-drop-files";
 import Button from '@mui/material/Button';
-import { fileTypes } from '../util/consts';
+import { API_URL, fileTypes } from '../util/consts';
 import { pdfjs } from 'react-pdf';
+import { ToastContainer, toast } from "react-toastify";
 import LoadingSpin from './LoadingSpin';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -36,23 +37,26 @@ const FileInputTab = (props) => {
 		reader.readAsText(file[0]);
 	};
 	const uploadText = async () => {
+        const token = localStorage.getItem("token");
 		props.setLoading(true);
-		await fetch("http://127.0.0.1:8000/bot/upload", {
+		await fetch(API_URL+"upload", {
 			method: 'post',
 			cache: 'no-cache',
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
 			},
 			body: JSON.stringify({ 'text': text })
 		}).then(response => response.json())
 			.then(data => {
 				props.setLoading(false);
 				console.log('Response:', data);
-				props.setStatus(data.msg)
+				props.setStatus(data.msg);
 			})
 			.catch(error => {
 				props.setLoading(false)
 				console.error('Error:', error);
+				toast.error("申し訳ありませんが、サーバーにエラーが発生したようです。");
 			});
 	};
 	return <>
@@ -91,6 +95,7 @@ const FileInputTab = (props) => {
 		<div className='build-button-container'>
 			<Button className='build-button' onClick={uploadText}>ボットを構築しましょう！</Button>
 		</div>
+      	<ToastContainer />
 	</>
 }
 
