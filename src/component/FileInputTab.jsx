@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FileUploader } from "react-drag-drop-files";
 import Button from '@mui/material/Button';
-import { API_URL, fileTypes } from '../util/consts';
+import { API_URL_DOCUMENT_UPLOAD, fileTypes } from '../util/consts';
 import { pdfjs } from 'react-pdf';
 import { ToastContainer, toast } from "react-toastify";
 import LoadingSpin from './LoadingSpin';
@@ -40,7 +40,7 @@ const FileInputTab = (props) => {
         const token = localStorage.getItem("token");
 		console.log(token)
 		props.setLoading(true);
-		await fetch(API_URL+"upload", {
+		await fetch(API_URL_DOCUMENT_UPLOAD, {
 			method: 'post',
 			cache: 'no-cache',
 			headers: {

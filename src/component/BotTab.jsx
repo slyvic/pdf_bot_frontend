@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Avatar, Typography, Box, Paper } from '@mui/material';
 import LoadingSpin from './LoadingSpin';
 import { ToastContainer, toast } from "react-toastify";
-import { API_URL } from '../util/consts';
+import { API_CHART } from '../util/consts';
 
 const BotTab = (props) => {
     const [msg, setMsg] = React.useState("");
@@ -15,7 +15,7 @@ const BotTab = (props) => {
             sender: "Me",
             content: msg
         });
-        await fetch(API_URL+"chat", {
+        await fetch(API_CHART, {
             method: 'post',
             cache: 'no-cache',
             headers: {

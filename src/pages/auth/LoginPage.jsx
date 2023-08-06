@@ -1,7 +1,7 @@
 import React from "react";
 import * as Components from "./Components.js";
 import "./styles.css";
-import { API_URL } from "../util/consts.js";
+import { API_CREATE_USER, API_URL_LOGIN } from "../../util/consts.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -13,12 +13,12 @@ const LoginPage = () => {
     name: "",
     email: "",
     password: "",
-    l_email: "precious6world@gmail.com",
-    l_password: "Basilisk011207)!!@)&",
+    l_email: "",
+    l_password: "",
   });
 
   const register = async () => {
-    await fetch(API_URL + "create-user", {
+    await fetch(API_CREATE_USER, {
       method: "post",
       cache: "no-cache",
       headers: {
@@ -44,7 +44,7 @@ const LoginPage = () => {
   };
 
   const login = async () => {
-    await fetch(API_URL + "login", {
+    await fetch(API_URL_LOGIN, {
       method: "post",
       cache: "no-cache",
       headers: {
@@ -84,7 +84,7 @@ const LoginPage = () => {
       <Components.Container>
         <Components.SignUpContainer signingin={signIn.toString()}>
           <Components.Form>
-            <Components.Title>Create Account</Components.Title>
+            <Components.Title>アカウントを作成する</Components.Title>
             <Components.Input
               isvalid={isFaild.toString()}
               name="name"

@@ -6,16 +6,8 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import FileInputTab from '../../component/FileInputTab';
 import BotTab from '../../component/BotTab';
-import styled from 'styled-components';
 import './style.css';
 import { Button } from '@mui/material';
-
-const StyledDiv = styled.div`
-  font-family: Arial, sans-serif;
-  font-size: 25px;
-  font-weight: bold;
-  color: #333;
-`;
 
 function Main() {
 	const [value, setValue] = React.useState('input-file');
@@ -31,9 +23,9 @@ function Main() {
 		<div className='app-container'>
 			<header className='app-header'>
 				<img src='assets/img/logo.png' width='100' height='100' alt='logo' />
-				<StyledDiv>
+				<div className='logo-text'>
 					Satoya
-				</StyledDiv>
+				</div>
 				<Button onClick={(e) => {
     				localStorage.setItem("token", "");
 					window.location.href = '/auth';

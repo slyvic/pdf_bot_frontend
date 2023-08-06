@@ -144,3 +144,8 @@
     border-radius: 10px;
     overflow-y: scroll;
   }
+
+  .logo-text {
+    font-weight: bold;
+    font-size: large;
+  }
