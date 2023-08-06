@@ -38,6 +38,7 @@ const FileInputTab = (props) => {
 	};
 	const uploadText = async () => {
         const token = localStorage.getItem("token");
+		console.log(token)
 		props.setLoading(true);
 		await fetch(API_URL+"upload", {
 			method: 'post',

@@ -8,6 +8,7 @@ import FileInputTab from '../../component/FileInputTab';
 import BotTab from '../../component/BotTab';
 import styled from 'styled-components';
 import './style.css';
+import { Button } from '@mui/material';
 
 const StyledDiv = styled.div`
   font-family: Arial, sans-serif;
@@ -33,6 +34,10 @@ function Main() {
 				<StyledDiv>
 					Satoya
 				</StyledDiv>
+				<Button onClick={(e) => {
+    				localStorage.setItem("token", "");
+					window.location.href = '/auth';
+					}} style={{marginLeft: 'auto'}}>Logout</Button>
 			</header>
 			<Box sx={{ width: '100%', typography: 'body1' }}>
 				<TabContext value={value}>
