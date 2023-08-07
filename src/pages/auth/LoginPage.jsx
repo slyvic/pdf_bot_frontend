@@ -1,13 +1,20 @@
 import React from "react";
 import * as Components from "./Components.js";
 import "./styles.css";
-import { API_CREATE_USER, API_URL_LOGIN } from "../../util/consts.js";
+import {
+  API_CREATE_USER,
+  API_METHOD_POST,
+  API_URL_LOGIN,
+} from "../../util/consts.js";
 import { ToastContainer, toast } from "react-toastify";
+import { TEXT_CONSTANTS } from "../../util/text_constants.js";
 import "react-toastify/dist/ReactToastify.css";
+import { satoya_api } from "../../util/api.js";
 
 const LoginPage = () => {
   const [signIn, toggle] = React.useState(false);
   const [isFaild, setIsFaild] = React.useState(false);
+  const lang = "JP";
 
   const [user, setUser] = React.useState({
     name: "",
@@ -18,57 +25,47 @@ const LoginPage = () => {
   });
 
   const register = async () => {
-    await fetch(API_CREATE_USER, {
-      method: "post",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.code === 400) {
+    satoya_api(API_CREATE_USER, API_METHOD_POST, user).then(
+      (res) => {
+        if (res.code === 400) {
           setIsFaild(true);
-          toast.warn(data.message);
-        } else if (data.code === 200) {
+          toast.warn(res.message);
+        } else if (res.code === 200) {
           setIsFaild(false);
-          toast.success(data.message);
-					toggle(true)
+          toast.success(res.message);
+          toggle(true);
         }
-      })
-      .catch((error) => {
+      },
+      (reject) => {
+        console.error("Error:", reject);
+        toast.error(TEXT_CONSTANTS.JP.server_error);
         setIsFaild(true);
-        console.error("Error:", error);
-      });
+      }
+    );
   };
 
   const login = async () => {
-    await fetch(API_URL_LOGIN, {
-      method: "post",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({email: user.l_email, password: user.l_password}),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-				console.log(data)
-        if (data.code === 400) {
+    satoya_api(API_URL_LOGIN, API_METHOD_POST, {
+      email: user.l_email,
+      password: user.l_password,
+    }).then(
+      (res) => {
+        if (res.code === 400) {
           setIsFaild(true);
-          toast.warn(data.message);
-        } else if (data.code === 200) {
+          toast.warn(res.message);
+        } else if (res.code === 200) {
           setIsFaild(false);
-          toast.success(data.message);
-    			localStorage.setItem("token", data.token);
-					setTimeout(() => window.location.href = '/', 5000)
+          toast.success(res.message);
+          localStorage.setItem("token", res.token);
+          setTimeout(() => (window.location.href = "/"), 5000);
         }
-      })
-      .catch((error) => {
+      },
+      (reject) => {
         setIsFaild(true);
-        console.error("Error:", error);
-      });
+        toast.error(TEXT_CONSTANTS.JP.server_error);
+        console.error("Error:", reject);
+      }
+    );
   };
 
   const setUserData = (e) => {
@@ -84,14 +81,16 @@ const LoginPage = () => {
       <Components.Container>
         <Components.SignUpContainer signingin={signIn.toString()}>
           <Components.Form>
-            <Components.Title>アカウントを作成する</Components.Title>
+            <Components.Title>
+              {TEXT_CONSTANTS[lang].create_account}
+            </Components.Title>
             <Components.Input
               isvalid={isFaild.toString()}
               name="name"
               value={user.name}
               onChange={setUserData}
               type="text"
-              placeholder="Name"
+              placeholder={TEXT_CONSTANTS[lang].username}
             />
             <Components.Input
               isvalid={isFaild.toString()}
@@ -99,7 +98,7 @@ const LoginPage = () => {
               value={user.email}
               onChange={setUserData}
               type="email"
-              placeholder="Email"
+              placeholder={TEXT_CONSTANTS[lang].email}
             />
             <Components.Input
               isvalid={isFaild.toString()}
@@ -107,52 +106,60 @@ const LoginPage = () => {
               value={user.password}
               onChange={setUserData}
               type="password"
-              placeholder="Password"
+              placeholder={TEXT_CONSTANTS[lang].password}
             />
-            <Components.Button onClick={register}>参加する</Components.Button>
+            <Components.Button onClick={register}>
+              {TEXT_CONSTANTS[lang].join}
+            </Components.Button>
           </Components.Form>
         </Components.SignUpContainer>
         <Components.SignInContainer signingin={signIn.toString()}>
           <Components.Form>
-            <Components.Title> ログイン</Components.Title>
+            <Components.Title>{TEXT_CONSTANTS[lang].login}</Components.Title>
             <Components.Input
               isvalid={isFaild.toString()}
               onChange={setUserData}
               type="email"
               name="l_email"
-              placeholder="Email"
+              placeholder={TEXT_CONSTANTS[lang].email}
             />
             <Components.Input
               isvalid={isFaild.toString()}
               onChange={setUserData}
               type="password"
               name="l_password"
-              placeholder="Password"
+              placeholder={TEXT_CONSTANTS[lang].password}
             />
             <Components.Anchor href="#">
-              パスワードをお忘れですか？
+              {TEXT_CONSTANTS[lang].forgot_password}
             </Components.Anchor>
-            <Components.Button onClick={login}> ログイン</Components.Button>
+            <Components.Button onClick={login}>
+              {TEXT_CONSTANTS[lang].login}
+            </Components.Button>
           </Components.Form>
         </Components.SignInContainer>
         <Components.OverlayContainer signingin={signIn.toString()}>
           <Components.Overlay signingin={signIn.toString()}>
             <Components.LeftOverlayPanel signingin={signIn.toString()}>
-              <Components.Title>もう一度ようこそ！</Components.Title>
+              <Components.Title>
+                {TEXT_CONSTANTS[lang].login_title}
+              </Components.Title>
               <Components.Paragraph>
-                引き続きご連絡いただくには、個人情報でログインしてください
+                {TEXT_CONSTANTS[lang].login_description}
               </Components.Paragraph>
               <Components.GhostButton onClick={() => toggle(true)}>
-                ログイン
+                {TEXT_CONSTANTS[lang].login}
               </Components.GhostButton>
             </Components.LeftOverlayPanel>
             <Components.RightOverlayPanel signingin={signIn.toString()}>
-              <Components.Title>こんにちは、友達！</Components.Title>
+              <Components.Title>
+                {TEXT_CONSTANTS[lang].register_title}
+              </Components.Title>
               <Components.Paragraph>
-                個人情報を入力し、私たちと一緒に旅行を始めましょう
+                {TEXT_CONSTANTS[lang].register_description}
               </Components.Paragraph>
               <Components.GhostButton onClick={() => toggle(false)}>
-                参加する
+                {TEXT_CONSTANTS[lang].join}
               </Components.GhostButton>
             </Components.RightOverlayPanel>
           </Components.Overlay>

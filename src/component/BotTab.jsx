@@ -1,92 +1,106 @@
-import * as React from 'react';
-import { Avatar, Typography, Box, Paper } from '@mui/material';
-import LoadingSpin from './LoadingSpin';
+import * as React from "react";
+import { Avatar, Typography, Box, Paper } from "@mui/material";
+import LoadingSpin from "./LoadingSpin";
 import { ToastContainer, toast } from "react-toastify";
-import { API_CHART } from '../util/consts';
+import { API_CHAT, API_METHOD_POST } from "../util/consts";
+import { TEXT_CONSTANTS } from "../util/text_constants";
+import { satoya_api } from "../util/api";
 
 const BotTab = (props) => {
-    const [msg, setMsg] = React.useState("");
+  const lang = "JP";
+  const [msg, setMsg] = React.useState("");
 
-    const submitMsg = async () => {
-        const temp = [...props.chatHistory];
-        const token = localStorage.getItem("token");
-        props.setLoading(true)
-        temp.push({
-            sender: "Me",
-            content: msg
-        });
-        await fetch(API_CHART, {
-            method: 'post',
-            cache: 'no-cache',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify({ 'text': msg + '. すべての言葉を日本語でお願いします。' })
-        }).then(response => response.json())
-            .then(data => {
-                // Process the response data
-                console.log('Response:', data.msg);
-                if(data.msg !== "") {
-                    temp.push({
-                        sender: "Bot",
-                        content: data.msg
-                    });
-                    props.setChatHistory(temp);
-                    console.log(temp)
-                    props.setLoading(false)
-                    setMsg("");
-                } else {
-                    console.log(data)
-                }
-            })
-            .catch(error => {
-                props.setLoading(false)
-				toast.error("申し訳ありませんが、サーバーにエラーが発生したようです。");
-                console.error('Error:', error);
-            });
-    };
-    return <>
-        <ToastContainer />
-        <div className='bot-content'>
-            {props.chatHistory.map((message, idx) => (
-                <Box
-                    key={idx}
-                    display="flex"
-                    alignItems="start"
-                    paddingTop={1}
-                    justifyContent={message.sender === 'Bot' ? 'flex-start' : 'flex-end'}
-                >
-                    {message.sender === 'Bot' && (
-                        <Avatar src="/Bot-avatar.png" alt="Bot" sx={{ mr: 1 }} />
-                    )}
-                    <Paper
-                        elevation={1}
-                        sx={{
-                            maxWidth: '80%',
-                            backgroundColor: message.sender === 'Bot' ? '#e0e0e0' : '#1976d2',
-                            color: message.sender === 'Bot' ? '#000' : '#fff',
-                            padding: '10px',
-                            borderRadius: '10px',
-                        }}
-                    >
-                        <Typography variant="body1">{message.content}</Typography>
-                    </Paper>
-                    {message.sender === 'Me' && (
-                        <Avatar src="/jane-avatar.png" alt="Me" sx={{ ml: 1 }} />
-                    )}
-                </Box>
-            ))}
+  const submitMsg = async () => {
+    const temp = [...props.chatHistory];
+    props.setLoading(true);
+    temp.push({
+      sender: "Me",
+      content: msg,
+    });
+    satoya_api(API_CHAT, API_METHOD_POST, {
+      text: msg + ". すべての言葉を日本語でお願いします。",
+    }).then(
+      (res) => {
+        if (res.msg !== "") {
+          temp.push({
+            sender: "Bot",
+            content: res.msg,
+          });
+          props.setChatHistory(temp);
+          props.setLoading(false);
+          setMsg("");
+        } else {
+          console.log(res);
+        }
+      },
+      (reject) => {
+        props.setLoading(false);
+        toast.error(TEXT_CONSTANTS[lang].server_error);
+        console.error("Error:", reject);
+      }
+    );
+  };
+  return (
+    <>
+      <ToastContainer />
+      <div className="bot-content">
+        {props.chatHistory.map((message, idx) => (
+          <Box
+            key={idx}
+            display="flex"
+            alignItems="start"
+            paddingTop={1}
+            justifyContent={
+              message.sender === "Bot" ? "flex-start" : "flex-end"
+            }
+          >
+            {message.sender === "Bot" && (
+              <Avatar src="/Bot-avatar.png" alt="Bot" sx={{ mr: 1 }} />
+            )}
+            <Paper
+              elevation={1}
+              sx={{
+                maxWidth: "80%",
+                backgroundColor:
+                  message.sender === "Bot" ? "#e0e0e0" : "#1976d2",
+                color: message.sender === "Bot" ? "#000" : "#fff",
+                padding: "10px",
+                borderRadius: "10px",
+              }}
+            >
+              <Typography variant="body1">{message.content}</Typography>
+            </Paper>
+            {message.sender === "Me" && (
+              <Avatar src="/jane-avatar.png" alt="Me" sx={{ ml: 1 }} />
+            )}
+          </Box>
+        ))}
+      </div>
+      <div className="text-box-container">
+        <div>{TEXT_CONSTANTS[lang].chat_description}</div>
+        <div className="text-box-value">
+          {props.loading ? (
+            <LoadingSpin
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            />
+          ) : (
+            <input
+              value={msg}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") submitMsg();
+              }}
+              onChange={(e) => setMsg(e.target.value)}
+              className="chat-message"
+            />
+          )}
         </div>
-        <div className='text-box-container'>
-            <div>
-                ここに文書について質問し、「入力」をタップして返信のために上にスクロールします。
-            </div>
-            <div className='text-box-value'>
-            {props.loading ? <LoadingSpin style={{display: 'flex', justifyContent: 'center', width: '100%'}} /> : <input value={msg} onKeyDown={e => { if (e.key === "Enter") submitMsg() }} onChange={e => setMsg(e.target.value)} className='chat-message' />}
-            </div>
-        </div>
+      </div>
     </>
-}
+  );
+};
 
 export default BotTab;
