@@ -1,5 +1,5 @@
 export const fileTypes = ["PDF"];
-export const API_URL = "http://127.0.0.1:8000/api/v1/";
+export const API_URL = "http://127.0.0.1:30000/api/v1/";
 
 export const API_METHOD_GET = "GET";
 export const API_METHOD_POST = "POST";

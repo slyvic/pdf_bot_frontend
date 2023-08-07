@@ -73,7 +73,7 @@ const FileInputTab = (props) => {
               props.setFile(null);
             }}
           >
-            Delete
+            {TEXT_CONSTANTS[lang].delete}
           </button>
         </div>
       ) : (
