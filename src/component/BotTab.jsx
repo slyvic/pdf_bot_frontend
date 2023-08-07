@@ -2,7 +2,7 @@ import * as React from "react";
 import { Avatar, Typography, Box, Paper } from "@mui/material";
 import LoadingSpin from "./LoadingSpin";
 import { ToastContainer, toast } from "react-toastify";
-import { API_CHAT, API_METHOD_POST } from "../util/consts";
+import { API_CHAT, API_METHOD_POST } from "../util/api_constants";
 import { TEXT_CONSTANTS } from "../util/text_constants";
 import { satoya_api } from "../util/api";
 

@@ -5,7 +5,7 @@ import {
   API_CREATE_USER,
   API_METHOD_POST,
   API_URL_LOGIN,
-} from "../../util/consts.js";
+} from "../../util/api_constants.js";
 import { ToastContainer, toast } from "react-toastify";
 import { TEXT_CONSTANTS } from "../../util/text_constants.js";
 import "react-toastify/dist/ReactToastify.css";

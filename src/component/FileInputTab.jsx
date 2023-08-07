@@ -5,7 +5,7 @@ import {
   API_METHOD_POST,
   API_URL_DOCUMENT_UPLOAD,
   fileTypes,
-} from "../util/consts";
+} from "../util/api_constants";
 import { pdfjs } from "react-pdf";
 import { ToastContainer, toast } from "react-toastify";
 import LoadingSpin from "./LoadingSpin";
