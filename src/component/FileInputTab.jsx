@@ -11,11 +11,12 @@ import { ToastContainer, toast } from "react-toastify";
 import LoadingSpin from "./LoadingSpin";
 import { TEXT_CONSTANTS } from "../util/text_constants";
 import { satoya_api } from "../util/api";
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const FileInputTab = (props) => {
-  const lang = "JP";
   const [text, setText] = React.useState("");
+  
   const handleFileDrop = (file) => {
     props.setFile(file);
     const reader = new FileReader();
@@ -46,21 +47,22 @@ const FileInputTab = (props) => {
     };
     reader.readAsText(file[0]);
   };
+
   const uploadText = async () => {
     props.setLoading(true);
     satoya_api(API_URL_DOCUMENT_UPLOAD, API_METHOD_POST, { text: text }).then(
       (res) => {
         props.setLoading(false);
-        console.log("Response:", res);
         props.setStatus(res.msg);
       },
       (reject) => {
         props.setLoading(false);
         console.error("Error:", reject);
-        toast.error(TEXT_CONSTANTS[lang].server_error);
+        toast.error(TEXT_CONSTANTS[props.lang].server_error);
       }
     );
   };
+
   return (
     <>
       {props.file?.length > 0 ? (
@@ -73,7 +75,7 @@ const FileInputTab = (props) => {
               props.setFile(null);
             }}
           >
-            {TEXT_CONSTANTS[lang].delete}
+            {TEXT_CONSTANTS[props.lang].delete}
           </button>
         </div>
       ) : (
@@ -87,13 +89,13 @@ const FileInputTab = (props) => {
               className="drop-file-content"
               style={{ whiteSpace: "pre-wrap" }}
             >
-              {TEXT_CONSTANTS[lang].file_drop_input}
+              {TEXT_CONSTANTS[props.lang].file_drop_input}
             </div>
           }
         />
       )}
       <div className="text-box-container">
-        <div>{TEXT_CONSTANTS[lang].text_box}</div>
+        <div>{TEXT_CONSTANTS[props.lang].text_box}</div>
         <div className="text-box-value">
           {props.loading ? (
             <LoadingSpin
@@ -110,7 +112,7 @@ const FileInputTab = (props) => {
       </div>
       <div className="build-button-container">
         <Button className="build-button" onClick={uploadText}>
-          {TEXT_CONSTANTS[lang].bot_build}
+          {TEXT_CONSTANTS[props.lang].bot_build}
         </Button>
       </div>
       <ToastContainer />

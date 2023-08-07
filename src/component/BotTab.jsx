@@ -7,16 +7,18 @@ import { TEXT_CONSTANTS } from "../util/text_constants";
 import { satoya_api } from "../util/api";
 
 const BotTab = (props) => {
-  const lang = "JP";
   const [msg, setMsg] = React.useState("");
-
   const submitMsg = async () => {
+
     const temp = [...props.chatHistory];
+
     props.setLoading(true);
+
     temp.push({
       sender: "Me",
       content: msg,
     });
+
     satoya_api(API_CHAT, API_METHOD_POST, {
       text: msg + ". すべての言葉を日本語でお願いします。",
     }).then(
@@ -35,11 +37,12 @@ const BotTab = (props) => {
       },
       (reject) => {
         props.setLoading(false);
-        toast.error(TEXT_CONSTANTS[lang].server_error);
+        toast.error(TEXT_CONSTANTS[props.lang].server_error);
         console.error("Error:", reject);
       }
     );
   };
+  
   return (
     <>
       <ToastContainer />
@@ -77,7 +80,7 @@ const BotTab = (props) => {
         ))}
       </div>
       <div className="text-box-container">
-        <div>{TEXT_CONSTANTS[lang].chat_description}</div>
+        <div>{TEXT_CONSTANTS[props.lang].chat_description}</div>
         <div className="text-box-value">
           {props.loading ? (
             <LoadingSpin
