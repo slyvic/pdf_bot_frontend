@@ -1,7 +1,7 @@
 import * as React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/auth/LoginPage";
-import BotPage from "./pages/main/BotPage";
+import MainPage from "./pages/main";
 
 function App() {
 	const token = localStorage.getItem("token");
@@ -11,7 +11,7 @@ function App() {
 			<div className="wrapper">
 				<BrowserRouter>
 					<Routes>
-						<Route path="/" element={<BotPage />} />
+						<Route path="/" element={<MainPage />} />
 						<Route path="/auth" element={<LoginPage />} />
 					</Routes>
 				</BrowserRouter>

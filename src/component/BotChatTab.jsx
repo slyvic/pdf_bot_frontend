@@ -6,7 +6,7 @@ import { API_CHAT, API_METHOD_POST } from "../util/api_constants";
 import { TEXT_CONSTANTS } from "../util/text_constants";
 import { satoya_api } from "../util/api";
 
-const BotTab = (props) => {
+const BotChatTab = (props) => {
   const [msg, setMsg] = React.useState("");
   const submitMsg = async () => {
 
@@ -106,4 +106,4 @@ const BotTab = (props) => {
   );
 };
 
-export default BotTab;
+export default BotChatTab;

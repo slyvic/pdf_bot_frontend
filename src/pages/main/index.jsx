@@ -5,13 +5,13 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import FileInputTab from "../../component/FileInputTab";
-import BotTab from "../../component/BotTab";
+import BotChatTab from "../../component/BotChatTab";
 import "./style.css";
 import { Button } from "@mui/material";
 import { TEXT_CONSTANTS } from "../../util/text_constants";
-import LanguageDropdown from "../../component/Language";
+import LanguageDropdown from "../../component/LanguageDropdown";
 
-function Main() {
+function MainPage() {
 	const [lang, setLang] = React.useState("EN");
 	const [value, setValue] = React.useState("input-file");
 	const [status, setStatus] = React.useState("");
@@ -110,7 +110,7 @@ function Main() {
 							/>
 						</TabPanel>
 						<TabPanel value="bot" className="tab-container">
-							<BotTab
+							<BotChatTab
 								lang={lang}
 								setLoading={setChatLoading}
 								loading={chatLoading}
@@ -125,4 +125,4 @@ function Main() {
 	);
 }
 
-export default Main;
+export default MainPage;
