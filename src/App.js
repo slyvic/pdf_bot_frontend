@@ -17,7 +17,7 @@ function App() {
       </div>
     );
   } else {
-    return <BotPage />;
+    return <LoginPage />;
   }
 }
 
