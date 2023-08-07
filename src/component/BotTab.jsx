@@ -20,7 +20,7 @@ const BotTab = (props) => {
     });
 
     satoya_api(API_CHAT, API_METHOD_POST, {
-      text: msg + ". すべての言葉を日本語でお願いします。",
+      text: msg + props.lang === "JP" ? ". すべての言葉を日本語でお願いします。" : "",
     }).then(
       (res) => {
         if (res.msg !== "") {
